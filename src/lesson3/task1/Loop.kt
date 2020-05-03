@@ -67,7 +67,15 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var a = 1
+    var b = n
+    while (b >= 10) {
+        a++
+        b /= 10
+    }
+    return a
+}
 
 /**
  * Простая
@@ -75,7 +83,16 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var a = 0
+    var b = 1
+    for (i in 0..n - 1) {
+        var c = a + b
+        a = b
+        b = c
+    }
+    return a
+}
 
 /**
  * Простая
@@ -83,21 +100,47 @@ fun fib(n: Int): Int = TODO()
  * Для заданных чисел m и n найти наименьшее общее кратное, то есть,
  * минимальное число k, которое делится и на m и на n без остатка
  */
-fun lcm(m: Int, n: Int): Int = TODO()
+fun lcm(m: Int, n: Int): Int {
+    return m * n / gdc(m, n)
+}
 
+fun gdc(m: Int, n: Int): Int {
+    var a = m
+    var b = n
+    while (a != 0) {
+        var t = b % a
+        b = a
+        a = t
+    }
+    return b
+}
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти минимальный делитель, превышающий 1
  */
-fun minDivisor(n: Int): Int = TODO()
+fun minDivisor(n: Int): Int {
+    var a = 2
+    for (i in 0 until n) {
+        if (n % a == 0) return a
+        else a++
+    }
+    return a
+}
 
 /**
  * Простая
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int = TODO()
+fun maxDivisor(n: Int): Int {
+    var a = n / 2
+    for (i in 0 until n) {
+        if (n % a == 0) return a
+        else a--
+    }
+    return a
+}
 
 /**
  * Простая
@@ -106,7 +149,15 @@ fun maxDivisor(n: Int): Int = TODO()
  * Взаимно простые числа не имеют общих делителей, кроме 1.
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
-fun isCoPrime(m: Int, n: Int): Boolean = TODO()
+fun isCoPrime(m: Int, n: Int): Boolean {
+    var a = 2.0
+    while (m % a + n % a != 0.0) {
+        a++
+        if (a > m) return true
+        else if (a > n) return true
+    }
+    return false
+}
 
 /**
  * Простая
@@ -115,7 +166,14 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  * то есть, существует ли такое целое k, что m <= k*k <= n.
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
-fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
+fun squareBetweenExists(m: Int, n: Int): Boolean {
+    var a = m.toDouble()
+    for (i in m..n) {
+        if (sqrt(a) * 10 % 10 == 0.0) return true
+        a++
+    }
+    return false
+}
 
 /**
  * Средняя
@@ -133,7 +191,17 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var a = x
+    var b = 0
+    if (x == 1) return 0
+    while (a != 1) {
+        if (a % 2 == 0) a /= 2
+        else if (a % 2 != 0) a = 3 * a + 1
+        b++
+    }
+    return b
+}
 
 /**
  * Средняя
@@ -164,7 +232,33 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var orig = n
+    var a = 0
+    while (orig > 0) {
+        a = a * 10 + orig % 10
+        orig /= 10
+    }
+    return a
+/*
+    var b = n
+    while (b >= 10.0) {
+        b /= 10
+        a++
+    }
+    var x = 1
+    for (i in 1..a - 1) {
+        x *= 10
+    }
+    var y = 1
+    var z = 0
+    for (i in 1..a) {
+        z += n / x % 10 * y
+        x /= 10
+        y *= 10
+    }
+    return z*/
+}
 
 /**
  * Средняя
@@ -175,7 +269,35 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    var orig = n
+    var a = 0
+    while (orig > 0) {
+        a = a * 10 + orig % 10
+        orig /= 10
+    }
+    return a == n
+    /*var a = 1
+    var b = n
+    while (b >= 10.0) {
+        b /= 10
+        a++
+    }
+    var x = 1
+    for (i in 1..a - 1) {
+        x *= 10
+    }
+    var y = 1
+    var z = 0
+    var q = 0
+    for (i in 1..a / 2) {
+        z += n / x % 10 * y
+        q += n /y % 10 * y
+        x /= 10
+        y *= 10
+    }
+    return z == q */
+}
 
 /**
  * Средняя
@@ -185,7 +307,27 @@ fun isPalindrome(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun hasDifferentDigits(n: Int): Boolean = TODO()
+fun hasDifferentDigits(n: Int): Boolean {
+    var a = 1
+    var b = n
+    while (b >= 10.0) {
+        b /= 10
+        a++
+    }
+    var x = 1
+    for (i in 1..a - 1) {
+        x *= 10
+    }
+    var q = 0
+    val y = n / x % 10
+    var z = 0
+    for (i in 1..a) {
+        z = n / x % 10
+        x /= 10
+        if (y != z) q++
+    }
+    return q > 0
+}
 
 /**
  * Сложная
@@ -196,7 +338,25 @@ fun hasDifferentDigits(n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var a = 0
+    var b = 1
+    var x = n
+    while (x > 0) {
+        a = b * b
+        b++
+        var o = a
+        while (o > 0) {
+            o /= 10
+            x--
+        }
+    }
+    while (x < 0) {
+        a /= 10
+        x++
+    }
+    return (a % 10)
+}
 
 /**
  * Сложная
@@ -207,4 +367,23 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var a = 0
+    var b = 1
+    var x = n
+    while (x > 0) {
+        var c = a + b
+        a = b
+        b = c
+        var o = a
+        while (o > 0) {
+            o /= 10
+            x--
+        }
+    }
+    while (x < 0) {
+        a /= 10
+        x++
+    }
+    return (a % 10)
+}

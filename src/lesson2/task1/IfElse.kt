@@ -3,6 +3,8 @@
 package lesson2.task1
 
 import lesson1.task1.discriminant
+import lesson1.task1.sqr
+import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.sqrt
 
@@ -63,7 +65,15 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * Мой возраст. Для заданного 0 < n < 200, рассматриваемого как возраст человека,
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
-fun ageDescription(age: Int): String = TODO()
+fun ageDescription(age: Int): String {
+    return when {
+        age % 100 in 5..20 -> "$age лет"
+        age % 100 in 105..120 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age % 10 <= 4 -> "$age года"
+        else -> "$age лет"
+    }
+}
 
 /**
  * Простая
@@ -76,8 +86,17 @@ fun timeForHalfWay(
     t1: Double, v1: Double,
     t2: Double, v2: Double,
     t3: Double, v3: Double
-): Double = TODO()
-
+): Double {
+    val s1 = t1 * v1
+    val s2 = t2 * v2
+    val s3 = t3 * v3
+    val s = (s1 + s2 + s3) / 2
+    var t = 0.0
+    if (s < s1) t = s / v1
+    else if (s < s1 + s2) t = t1 + (s - s1) / v2
+    else t = t1 + t2 + (s - s1 - s2) / v3
+    return t
+}
 /**
  * Простая
  *
@@ -91,7 +110,20 @@ fun whichRookThreatens(
     kingX: Int, kingY: Int,
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
-): Int = TODO()
+): Int {
+    var a = 0
+    a += when (kingX) {
+        rookX1 -> 1
+        rookX2 -> 2
+        else -> 0
+    }
+    a += when (kingY) {
+        rookY1 -> 1
+        rookY2 -> 2
+        else -> 0
+    }
+    return a
+}
 
 /**
  * Простая
@@ -107,7 +139,19 @@ fun rookOrBishopThreatens(
     kingX: Int, kingY: Int,
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
-): Int = TODO()
+): Int {
+    var a = 0
+    a += when {
+        kingX == rookX -> 1
+        kingY == rookY -> 1
+        else -> 0
+    }
+    a += when {
+        abs(kingX - bishopX) == abs(kingY - bishopY) -> 2
+        else -> 0
+    }
+    return a
+}
 
 /**
  * Простая
@@ -117,7 +161,31 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun triangleKind(a: Double, b: Double, c: Double): Int = TODO()
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    if (a >= b && a >= c) {
+        when {
+            a > b + c -> return -1
+            sqr(a) < sqr(b) + sqr(c) -> return 0
+            sqr(a) == sqr(b) + sqr(c) -> return 1
+            sqr(a) > sqr(b) + sqr(c) -> return 2
+        }
+    } else if (b >= a && b >= c) {
+        when {
+            b > a + c -> return -1
+            sqr(b) < sqr(a) + sqr(c) -> return 0
+            sqr(b) == sqr(a) + sqr(c) -> return 1
+            sqr(b) > sqr(a) + sqr(c) -> return 2
+        }
+    } else if (c >= b && c >= a) {
+        when {
+            c > a + b -> return -1
+            sqr(c) < sqr(b) + sqr(a) -> return 0
+            sqr(c) == sqr(b) + sqr(a) -> return 1
+            sqr(c) > sqr(b) + sqr(a) -> return 2
+        }
+    }
+    return -2
+}
 
 /**
  * Средняя

@@ -115,14 +115,20 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double = TODO()
+fun abs(v: List<Double>): Double {
+    val c = v.map { it * it }
+    return 0.0 + sqrt(c.sum())
+}
 
 /**
  * Простая
  *
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
-fun mean(list: List<Double>): Double = TODO()
+fun mean(list: List<Double>): Double {
+    return if (list.isEmpty()) 0.0
+    else 0.0 + list.sum() / list.size
+}
 
 /**
  * Средняя
@@ -132,7 +138,14 @@ fun mean(list: List<Double>): Double = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun center(list: MutableList<Double>): MutableList<Double> = TODO()
+fun center(list: MutableList<Double>): MutableList<Double> {
+    val a = list.sum() / list.size
+    for (i in 0 until list.size) {
+        var b = list[i]
+        list[i] = b - a
+    }
+    return list
+}
 
 /**
  * Средняя
@@ -141,7 +154,11 @@ fun center(list: MutableList<Double>): MutableList<Double> = TODO()
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int = TODO()
+fun times(a: List<Int>, b: List<Int>): Int {
+    return if (a.isEmpty()) 0
+    else if (a.size == 2) (a[0] * b[0]) + (a[1] * b[1])
+    else a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+}
 
 /**
  * Средняя
@@ -163,7 +180,14 @@ fun polynom(p: List<Int>, x: Int): Int = TODO()
  *
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
-fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
+fun accumulate(list: MutableList<Int>): MutableList<Int> {
+    if (list.size <= 1) return list
+    else for (i in 1 until list.size) {
+        list[i] += list[i - 1]
+    }
+    return list
+}
+
 
 /**
  * Средняя
@@ -172,7 +196,19 @@ fun accumulate(list: MutableList<Int>): MutableList<Int> = TODO()
  * Результат разложения вернуть в виде списка множителей, например 75 -> (3, 5, 5).
  * Множители в списке должны располагаться по возрастанию.
  */
-fun factorize(n: Int): List<Int> = TODO()
+fun factorize(n: Int): List<Int> {
+    var list = mutableListOf<Int>()
+    var b = n
+    while (b != 1) {
+        var a = 2
+        while (b % a != 0) {
+            a++
+        }
+        list.add(a)
+        b /= a
+    }
+    return list.sorted()
+}
 
 /**
  * Сложная
@@ -181,7 +217,20 @@ fun factorize(n: Int): List<Int> = TODO()
  * Результат разложения вернуть в виде строки, например 75 -> 3*5*5
  * Множители в результирующей строке должны располагаться по возрастанию.
  */
-fun factorizeToString(n: Int): String = TODO()
+fun factorizeToString(n: Int): String {
+    var list = mutableListOf<Int>()
+    var b = n
+    while (b != 1) {
+        var a = 2
+        while (b % a != 0) {
+            a++
+        }
+        list.add(a)
+        b /= a
+    }
+    list.sorted()
+    return list.joinToString(separator = "*")
+}
 
 /**
  * Средняя
@@ -190,7 +239,19 @@ fun factorizeToString(n: Int): String = TODO()
  * Результат перевода вернуть в виде списка цифр в base-ичной системе от старшей к младшей,
  * например: n = 100, base = 4 -> (1, 2, 1, 0) или n = 250, base = 14 -> (1, 3, 12)
  */
-fun convert(n: Int, base: Int): List<Int> = TODO()
+fun convert(n: Int, base: Int): List<Int> {
+    var list = mutableListOf<Int>()
+    var b = n
+    while (b != 0) {
+        if (b % base == 0) list.add(0, 0)
+        else if (b < base) list.add(0, b)
+        else if (b % base != 0) {
+            list.add(0, (b - b / base * base))
+        }
+        b /= base
+    }
+    return list
+}
 
 /**
  * Сложная
@@ -203,7 +264,27 @@ fun convert(n: Int, base: Int): List<Int> = TODO()
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = TODO()
+fun convertToString(n: Int, base: Int): String {
+    var list = mutableListOf<String>()
+    var b = n
+    /*while (b != 0) {
+        when {
+            b % base == 0 -> list.add(0, 0.toString())
+            base > b -> list.add(0, b.toString())
+            b % base != 0 -> list.add(0, ((b - b / base * base).toString()))
+        }
+    }*/
+    while (b != 0) {
+        when {
+            b % base == 0 -> list.add(0, 0.toString())
+            b < base -> list.add(0, b.toString())
+            b - b / base * base > 9 -> list.add(0, (b - b / base * base + 87).toChar().toString())
+            b % base != 0 -> list.add(0, (b - b / base * base).toString())
+        }
+        b /= base
+    }
+    return list.joinToString(separator = "")
+}
 
 /**
  * Средняя
