@@ -245,9 +245,7 @@ fun convert(n: Int, base: Int): List<Int> {
     while (b != 0) {
         if (b % base == 0) list.add(0, 0)
         else if (b < base) list.add(0, b)
-        else if (b % base != 0) {
-            list.add(0, (b - b / base * base))
-        }
+        else if (b % base != 0) list.add(0, (b - b / base * base))
         b /= base
     }
     return list
@@ -267,21 +265,17 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     var list = mutableListOf<String>()
     var b = n
-    /*while (b != 0) {
-        when {
-            b % base == 0 -> list.add(0, 0.toString())
-            base > b -> list.add(0, b.toString())
-            b % base != 0 -> list.add(0, ((b - b / base * base).toString()))
-        }
-    }*/
     while (b != 0) {
         when {
             b % base == 0 -> list.add(0, 0.toString())
             b < base -> list.add(0, b.toString())
-            b - b / base * base > 9 -> list.add(0, (b - b / base * base + 87).toChar().toString())
             b % base != 0 -> list.add(0, (b - b / base * base).toString())
         }
         b /= base
+    }
+    for (i in 0 until list.size) {
+        val element = list[i].toInt()
+        if (element > 9) list[i] = (element + 87).toChar().toString()
     }
     return list.joinToString(separator = "")
 }
